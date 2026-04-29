@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 13 Quiz: Genetic Code and Protein Synthesis</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #ecf0f1;
+            --text-color: #333;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--background-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .timer-container {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--accent-color);
+            background: #ffeaea;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 1px solid #ffcccc;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .question-card {
+            background: #fdfdfd;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background: #e9ecef;
+        }
+
+        input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .submit-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        #results-container {
+            display: none;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid var(--background-color);
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .result-card {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border-left: 5px solid;
+        }
+
+        .result-correct {
+            background-color: #e8f8f5;
+            border-left-color: var(--success-color);
+        }
+
+        .result-incorrect {
+            background-color: #fdedec;
+            border-left-color: var(--error-color);
+        }
+
+        .result-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .user-answer {
+            margin-bottom: 5px;
+        }
+
+        .correct-answer {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .loading-msg {
+            text-align: center;
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            display: none;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Lecture 13 Quiz: Genetic Code and Protein Synthesis</h1>
+        <div class="subtitle">By Dr. Nada Mohamed</div>
+        <div class="timer-container" id="timer">30:00</div>
+    </header>
+
+    <form id="quiz-form">
+        <div class="form-group">
+            <label for="student-name">Student Name <span style="color:red;">*</span></label>
+            <input type="text" id="student-name" required placeholder="Enter your full name">
+        </div>
+
+        <div id="questions-container">
+            </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">Submit Quiz</button>
+        <div class="loading-msg" id="loading-msg">Submitting your answers... Please wait.</div>
+    </form>
+
+    <div id="results-container">
+        <div class="score-display" id="score-display"></div>
+        <div id="detailed-results">
+            </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const FORMSPREE_URL = "https://formspree.io/f/xgorlkjl";
+    
+    const quizData = [
+        // Standard Core Questions (1-20)
+        {
+            question: "What is the fundamental relationship between a gene and its product as described in the process of protein synthesis?",
+            options: [
+                "One gene codes for multiple varying polypeptides",
+                "One gene codes for one polypeptide",
+                "Multiple genes code for a single polypeptide",
+                "One gene directly codes for one amino acid"
+            ],
+            correct: 1
+        },
+        {
+            question: "What specifically directs the order of amino acids in a polypeptide chain?",
+            options: [
+                "The sequence of the bases forming the code on the DNA molecule",
+                "The physical shape of the ribosome",
+                "The availability of free amino acids in the cytoplasm",
+                "The number of tRNA molecules present"
+            ],
+            correct: 0
+        },
+        {
+            question: "A sequence of three bases on an mRNA molecule is referred to as a(n):",
+            options: [
+                "Triplet",
+                "Anticodon",
+                "Codon",
+                "Polypeptide"
+            ],
+            correct: 2
+        },
+        {
+            question: "Where is an anticodon located?",
+            options: [
+                "On the DNA template strand",
+                "On the mRNA molecule",
+                "On the ribosome",
+                "On the tRNA molecule"
+            ],
+            correct: 3
+        },
+        {
+            question: "How many possible base code combinations exist in the genetic code?",
+            options: [
+                "20",
+                "64",
+                "16",
+                "4"
+            ],
+            correct: 1
+        },
+        {
+            question: "What is the biological significance of having 64 possible code combinations for only 20 amino acids?",
+            options: [
+                "It allows multiple amino acids to be coded by a single codon",
+                "It creates redundancy, meaning more than one codon can code for a particular amino acid",
+                "It ensures that transcription factors bind securely to DNA",
+                "It prevents the removal of methionine from the polypeptide chain"
+            ],
+            correct: 1
+        },
+        {
+            question: "Which amino acid does the initiation codon AUG code for?",
+            options: [
+                "Serine",
+                "Glycine",
+                "Methionine",
+                "Tryptophan"
+            ],
+            correct: 2
+        },
+        {
+            question: "What happens when the protein-synthesizing machinery encounters a stop codon?",
+            options: [
+                "A special 'stop' amino acid is added to the chain",
+                "Translation ends and the chain is terminated",
+                "The ribosome reverses its direction on the mRNA",
+                "RNA polymerase detaches from the DNA"
+            ],
+            correct: 1
+        },
+        {
+            question: "How many codons act as 'stop' signals rather than coding for an amino acid?",
+            options: [
+                "One",
+                "Two",
+                "Three",
+                "Four"
+            ],
+            correct: 2
+        },
+        {
+            question: "What molecule acts as the bridge between the information stored in DNA and the formation of a protein?",
+            options: [
+                "DNA polymerase",
+                "Ribose nucleic acid (RNA)",
+                "Transcription factors",
+                "The polypeptide chain"
+            ],
+            correct: 1
+        },
+        {
+            question: "The process of transcription begins when:",
+            options: [
+                "mRNA binds to the ribosome",
+                "A section of DNA unwinds after transcription factors bind",
+                "tRNA brings an amino acid to the cytoplasm",
+                "The ribosome nudges the mRNA strand along"
+            ],
+            correct: 1
+        },
+        {
+            question: "During transcription, what acts as the template for the synthesized mRNA?",
+            options: [
+                "Both strands of the DNA molecule",
+                "One strand of the DNA molecule",
+                "The RNA polymerase enzyme",
+                "The assembled ribosomes"
+            ],
+            correct: 1
+        },
+        {
+            question: "Which enzyme catalyzes the synthesis of mRNA during transcription?",
+            options: [
+                "DNA polymerase",
+                "RNA polymerase",
+                "Ribosomal RNA",
+                "Helicase"
+            ],
+            correct: 1
+        },
+        {
+            question: "After mRNA is synthesized, how does it reach the cytoplasm?",
+            options: [
+                "It diffuses directly through the solid nuclear membrane",
+                "It is transported by tRNA molecules",
+                "It moves through the nuclear pores",
+                "It is carried by ribosomes into the cytoplasm"
+            ],
+            correct: 2
+        },
+        {
+            question: "Where does the translation of mRNA into an amino acid sequence occur?",
+            options: [
+                "At the ribosome",
+                "Inside the nucleus",
+                "On the DNA template strand",
+                "Within the nuclear pores"
+            ],
+            correct: 0
+        },
+        {
+            question: "What is the specific role of tRNA in translation?",
+            options: [
+                "It unzips the DNA double helix",
+                "It brings the appropriate amino acid to the ribosome",
+                "It catalyzes the formation of peptide bonds",
+                "It acts as the template for the polypeptide chain"
+            ],
+            correct: 1
+        },
+        {
+            question: "How does the correct amino acid get placed in sequence during translation?",
+            options: [
+                "The codon on the tRNA matches the anticodon on the DNA",
+                "The anticodon on the tRNA matches with the codon on the mRNA",
+                "The ribosome reads the DNA sequence directly",
+                "Amino acids randomly attach until the correct one fits"
+            ],
+            correct: 1
+        },
+        {
+            question: "What occurs immediately after a new amino acid is joined to the polypeptide chain?",
+            options: [
+                "The mRNA molecule degrades completely",
+                "The ribosome nudges the mRNA strand along, and the next tRNA falls into place",
+                "Transcription factors bind to the DNA again",
+                "The newly formed protein is immediately secreted from the cell"
+            ],
+            correct: 1
+        },
+        {
+            question: "If the start codon signals the beginning of translation, what might happen to its corresponding amino acid later on?",
+            options: [
+                "It is converted into a stop codon",
+                "It is permanently attached to the ribosome",
+                "An enzyme may subsequently remove it from the chain",
+                "It serves as a transcription factor"
+            ],
+            correct: 2
+        },
+        {
+            question: "The fundamental difference between transcription and translation is:",
+            options: [
+                "Transcription creates RNA from a DNA template, while translation creates a polypeptide from an mRNA template",
+                "Transcription occurs in the cytoplasm, while translation occurs in the nucleus",
+                "Transcription utilizes tRNA, while translation utilizes RNA polymerase",
+                "Transcription results in a double-stranded molecule, while translation results in a single-stranded nucleic acid"
+            ],
+            correct: 0
+        },
+        // Advanced/Integration Questions (21-30)
+        {
+            question: "Considering the mathematical basis of the genetic code, why would a biological system using only two nucleotides per codon be insufficient?",
+            options: [
+                "It would produce 64 combinations, creating too much redundancy.",
+                "It would only yield 16 possible combinations, which is less than the 20 required for all amino acids.",
+                "It would prevent the formation of start and stop codons.",
+                "It would make the mRNA strand too unstable to pass through nuclear pores."
+            ],
+            correct: 1
+        },
+        {
+            question: "A sequence of mRNA reads AUG-UUU-GGC-UAA. Assuming standard translation without post-translational modifications, how many amino acids will the resulting polypeptide chain initially contain?",
+            options: [
+                "Four",
+                "Three",
+                "Two",
+                "One"
+            ],
+            correct: 1
+        },
+        {
+            question: "If a pharmacological agent completely blocks the active site of RNA polymerase in a cell, which of the following immediate consequences would be observed?",
+            options: [
+                "Ribosomes would stop nudging mRNA along",
+                "Complementary mRNA would fail to be synthesized from the unwound DNA template",
+                "tRNA would be unable to carry amino acids",
+                "Polypeptide chains would fail to release from the ribosome"
+            ],
+            correct: 1
+        },
+        {
+            question: "A newly synthesized functional polypeptide chain is found to lack methionine at its starting position, yet the translation process was documented as normal. What is the most logical explanation?",
+            options: [
+                "The initiation codon AUG mutated into a stop codon before translation.",
+                "The ribosome skipped the start codon and began reading at the second codon.",
+                "An enzyme subsequently removed the methionine after the polypeptide chain was formed.",
+                "tRNA molecules carrying methionine were completely depleted in the cytoplasm."
+            ],
+            correct: 2
+        },
+        {
+            question: "During the synthesis of a specific protein, if a sequence of three bases on the DNA template strand reads 'TAC', what will be the corresponding anticodon on the tRNA that brings the correct amino acid?",
+            options: [
+                "AUG",
+                "UAC",
+                "TAC",
+                "GCA"
+            ],
+            correct: 1
+        },
+        {
+            question: "Redundancy in the genetic code is primarily protective. Based on the provided codon structures, which of the following mutations would redundancy most likely render harmless?",
+            options: [
+                "A substitution in the first position of a codon",
+                "A change that converts an amino-acid-coding codon into a stop codon",
+                "A substitution in the third position of a codon that results in the same amino acid being incorporated",
+                "A deletion of an entire codon, removing one amino acid"
+            ],
+            correct: 2
+        },
+        {
+            question: "What is the strict chronological sequence of molecular interactions required to initiate and perform transcription?",
+            options: [
+                "RNA polymerase binds -> mRNA moves to cytoplasm -> DNA unwinds",
+                "Transcription factors bind -> DNA unwinds -> RNA polymerase catalyzes synthesis",
+                "DNA unwinds -> Ribosome attaches -> Transcription factors are synthesized",
+                "tRNA matches anticodon -> DNA acts as template -> Transcription factors release"
+            ],
+            correct: 1
+        },
+        {
+            question: "If an error occurs such that the ribosome fails to 'nudge the mRNA strand along' immediately after an amino acid is joined, what is the direct functional result?",
+            options: [
+                "The mRNA will reverse its path back into the nucleus",
+                "The next tRNA will be unable to fall into place, halting elongation of the polypeptide",
+                "The DNA template will immediately begin a new round of transcription",
+                "Multiple identical amino acids will be added simultaneously from the same tRNA"
+            ],
+            correct: 1
+        },
+        {
+            question: "Considering the pathway from gene to protein, where does the critical translation from 'nucleic acid sequence' to 'amino acid sequence' mechanistically occur?",
+            options: [
+                "When transcription factors initially bind to the DNA helix",
+                "As the mRNA transcript passes through the nuclear pore complex",
+                "When the tRNA anticodon matches the mRNA codon at the active ribosome",
+                "When RNA polymerase unwinds the DNA double helix"
+            ],
+            correct: 2
+        },
+        {
+            question: "A specific cellular toxin permanently seals the nuclear pores. Which stage of gene expression is directly isolated and prevented from occurring as a result?",
+            options: [
+                "Transcription",
+                "Unwinding of DNA",
+                "Binding of transcription factors",
+           
