@@ -225,327 +225,146 @@
         <div class="timer-container" id="timer">30:00</div>
     </header>
 
-    <form id="quiz-form">
+    <form id="quiz-form" action="https://formspree.io/f/xgorlkjl" method="POST">
         <div class="form-group">
             <label for="student-name">Student Name <span style="color:red;">*</span></label>
-            <input type="text" id="student-name" required placeholder="Enter your full name">
+            <input type="text" id="student-name" name="Student Name" required value="DMAshraf1999" placeholder="Enter your full name">
         </div>
 
         <div id="questions-container">
+            <div class="question-card" data-qindex="1">
+                <div class="question-text">1. What is the fundamental relationship between a gene and its product as described in the process of protein synthesis?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="One gene codes for multiple varying polypeptides" required> One gene codes for multiple varying polypeptides</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="One gene codes for one polypeptide" data-correct="true"> One gene codes for one polypeptide</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="Multiple genes code for a single polypeptide"> Multiple genes code for a single polypeptide</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="One gene directly codes for one amino acid"> One gene directly codes for one amino acid</label></li>
+                </ul>
             </div>
 
-        <button type="submit" class="submit-btn" id="submit-btn">Submit Quiz</button>
-        <div class="loading-msg" id="loading-msg">Submitting your answers... Please wait.</div>
-    </form>
-
-    <div id="results-container">
-        <div class="score-display" id="score-display"></div>
-        <div id="detailed-results">
+            <div class="question-card" data-qindex="2">
+                <div class="question-text">2. What specifically directs the order of amino acids in a polypeptide chain?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="The sequence of the bases forming the code on the DNA molecule" data-correct="true" required> The sequence of the bases forming the code on the DNA molecule</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="The physical shape of the ribosome"> The physical shape of the ribosome</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="The availability of free amino acids in the cytoplasm"> The availability of free amino acids in the cytoplasm</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="The number of tRNA molecules present"> The number of tRNA molecules present</label></li>
+                </ul>
             </div>
-    </div>
-</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const FORMSPREE_URL = "https://formspree.io/f/xgorlkjl";
-    
-    const quizData = [
-        // Standard Core Questions (1-20)
-        {
-            question: "What is the fundamental relationship between a gene and its product as described in the process of protein synthesis?",
-            options: [
-                "One gene codes for multiple varying polypeptides",
-                "One gene codes for one polypeptide",
-                "Multiple genes code for a single polypeptide",
-                "One gene directly codes for one amino acid"
-            ],
-            correct: 1
-        },
-        {
-            question: "What specifically directs the order of amino acids in a polypeptide chain?",
-            options: [
-                "The sequence of the bases forming the code on the DNA molecule",
-                "The physical shape of the ribosome",
-                "The availability of free amino acids in the cytoplasm",
-                "The number of tRNA molecules present"
-            ],
-            correct: 0
-        },
-        {
-            question: "A sequence of three bases on an mRNA molecule is referred to as a(n):",
-            options: [
-                "Triplet",
-                "Anticodon",
-                "Codon",
-                "Polypeptide"
-            ],
-            correct: 2
-        },
-        {
-            question: "Where is an anticodon located?",
-            options: [
-                "On the DNA template strand",
-                "On the mRNA molecule",
-                "On the ribosome",
-                "On the tRNA molecule"
-            ],
-            correct: 3
-        },
-        {
-            question: "How many possible base code combinations exist in the genetic code?",
-            options: [
-                "20",
-                "64",
-                "16",
-                "4"
-            ],
-            correct: 1
-        },
-        {
-            question: "What is the biological significance of having 64 possible code combinations for only 20 amino acids?",
-            options: [
-                "It allows multiple amino acids to be coded by a single codon",
-                "It creates redundancy, meaning more than one codon can code for a particular amino acid",
-                "It ensures that transcription factors bind securely to DNA",
-                "It prevents the removal of methionine from the polypeptide chain"
-            ],
-            correct: 1
-        },
-        {
-            question: "Which amino acid does the initiation codon AUG code for?",
-            options: [
-                "Serine",
-                "Glycine",
-                "Methionine",
-                "Tryptophan"
-            ],
-            correct: 2
-        },
-        {
-            question: "What happens when the protein-synthesizing machinery encounters a stop codon?",
-            options: [
-                "A special 'stop' amino acid is added to the chain",
-                "Translation ends and the chain is terminated",
-                "The ribosome reverses its direction on the mRNA",
-                "RNA polymerase detaches from the DNA"
-            ],
-            correct: 1
-        },
-        {
-            question: "How many codons act as 'stop' signals rather than coding for an amino acid?",
-            options: [
-                "One",
-                "Two",
-                "Three",
-                "Four"
-            ],
-            correct: 2
-        },
-        {
-            question: "What molecule acts as the bridge between the information stored in DNA and the formation of a protein?",
-            options: [
-                "DNA polymerase",
-                "Ribose nucleic acid (RNA)",
-                "Transcription factors",
-                "The polypeptide chain"
-            ],
-            correct: 1
-        },
-        {
-            question: "The process of transcription begins when:",
-            options: [
-                "mRNA binds to the ribosome",
-                "A section of DNA unwinds after transcription factors bind",
-                "tRNA brings an amino acid to the cytoplasm",
-                "The ribosome nudges the mRNA strand along"
-            ],
-            correct: 1
-        },
-        {
-            question: "During transcription, what acts as the template for the synthesized mRNA?",
-            options: [
-                "Both strands of the DNA molecule",
-                "One strand of the DNA molecule",
-                "The RNA polymerase enzyme",
-                "The assembled ribosomes"
-            ],
-            correct: 1
-        },
-        {
-            question: "Which enzyme catalyzes the synthesis of mRNA during transcription?",
-            options: [
-                "DNA polymerase",
-                "RNA polymerase",
-                "Ribosomal RNA",
-                "Helicase"
-            ],
-            correct: 1
-        },
-        {
-            question: "After mRNA is synthesized, how does it reach the cytoplasm?",
-            options: [
-                "It diffuses directly through the solid nuclear membrane",
-                "It is transported by tRNA molecules",
-                "It moves through the nuclear pores",
-                "It is carried by ribosomes into the cytoplasm"
-            ],
-            correct: 2
-        },
-        {
-            question: "Where does the translation of mRNA into an amino acid sequence occur?",
-            options: [
-                "At the ribosome",
-                "Inside the nucleus",
-                "On the DNA template strand",
-                "Within the nuclear pores"
-            ],
-            correct: 0
-        },
-        {
-            question: "What is the specific role of tRNA in translation?",
-            options: [
-                "It unzips the DNA double helix",
-                "It brings the appropriate amino acid to the ribosome",
-                "It catalyzes the formation of peptide bonds",
-                "It acts as the template for the polypeptide chain"
-            ],
-            correct: 1
-        },
-        {
-            question: "How does the correct amino acid get placed in sequence during translation?",
-            options: [
-                "The codon on the tRNA matches the anticodon on the DNA",
-                "The anticodon on the tRNA matches with the codon on the mRNA",
-                "The ribosome reads the DNA sequence directly",
-                "Amino acids randomly attach until the correct one fits"
-            ],
-            correct: 1
-        },
-        {
-            question: "What occurs immediately after a new amino acid is joined to the polypeptide chain?",
-            options: [
-                "The mRNA molecule degrades completely",
-                "The ribosome nudges the mRNA strand along, and the next tRNA falls into place",
-                "Transcription factors bind to the DNA again",
-                "The newly formed protein is immediately secreted from the cell"
-            ],
-            correct: 1
-        },
-        {
-            question: "If the start codon signals the beginning of translation, what might happen to its corresponding amino acid later on?",
-            options: [
-                "It is converted into a stop codon",
-                "It is permanently attached to the ribosome",
-                "An enzyme may subsequently remove it from the chain",
-                "It serves as a transcription factor"
-            ],
-            correct: 2
-        },
-        {
-            question: "The fundamental difference between transcription and translation is:",
-            options: [
-                "Transcription creates RNA from a DNA template, while translation creates a polypeptide from an mRNA template",
-                "Transcription occurs in the cytoplasm, while translation occurs in the nucleus",
-                "Transcription utilizes tRNA, while translation utilizes RNA polymerase",
-                "Transcription results in a double-stranded molecule, while translation results in a single-stranded nucleic acid"
-            ],
-            correct: 0
-        },
-        // Advanced/Integration Questions (21-30)
-        {
-            question: "Considering the mathematical basis of the genetic code, why would a biological system using only two nucleotides per codon be insufficient?",
-            options: [
-                "It would produce 64 combinations, creating too much redundancy.",
-                "It would only yield 16 possible combinations, which is less than the 20 required for all amino acids.",
-                "It would prevent the formation of start and stop codons.",
-                "It would make the mRNA strand too unstable to pass through nuclear pores."
-            ],
-            correct: 1
-        },
-        {
-            question: "A sequence of mRNA reads AUG-UUU-GGC-UAA. Assuming standard translation without post-translational modifications, how many amino acids will the resulting polypeptide chain initially contain?",
-            options: [
-                "Four",
-                "Three",
-                "Two",
-                "One"
-            ],
-            correct: 1
-        },
-        {
-            question: "If a pharmacological agent completely blocks the active site of RNA polymerase in a cell, which of the following immediate consequences would be observed?",
-            options: [
-                "Ribosomes would stop nudging mRNA along",
-                "Complementary mRNA would fail to be synthesized from the unwound DNA template",
-                "tRNA would be unable to carry amino acids",
-                "Polypeptide chains would fail to release from the ribosome"
-            ],
-            correct: 1
-        },
-        {
-            question: "A newly synthesized functional polypeptide chain is found to lack methionine at its starting position, yet the translation process was documented as normal. What is the most logical explanation?",
-            options: [
-                "The initiation codon AUG mutated into a stop codon before translation.",
-                "The ribosome skipped the start codon and began reading at the second codon.",
-                "An enzyme subsequently removed the methionine after the polypeptide chain was formed.",
-                "tRNA molecules carrying methionine were completely depleted in the cytoplasm."
-            ],
-            correct: 2
-        },
-        {
-            question: "During the synthesis of a specific protein, if a sequence of three bases on the DNA template strand reads 'TAC', what will be the corresponding anticodon on the tRNA that brings the correct amino acid?",
-            options: [
-                "AUG",
-                "UAC",
-                "TAC",
-                "GCA"
-            ],
-            correct: 1
-        },
-        {
-            question: "Redundancy in the genetic code is primarily protective. Based on the provided codon structures, which of the following mutations would redundancy most likely render harmless?",
-            options: [
-                "A substitution in the first position of a codon",
-                "A change that converts an amino-acid-coding codon into a stop codon",
-                "A substitution in the third position of a codon that results in the same amino acid being incorporated",
-                "A deletion of an entire codon, removing one amino acid"
-            ],
-            correct: 2
-        },
-        {
-            question: "What is the strict chronological sequence of molecular interactions required to initiate and perform transcription?",
-            options: [
-                "RNA polymerase binds -> mRNA moves to cytoplasm -> DNA unwinds",
-                "Transcription factors bind -> DNA unwinds -> RNA polymerase catalyzes synthesis",
-                "DNA unwinds -> Ribosome attaches -> Transcription factors are synthesized",
-                "tRNA matches anticodon -> DNA acts as template -> Transcription factors release"
-            ],
-            correct: 1
-        },
-        {
-            question: "If an error occurs such that the ribosome fails to 'nudge the mRNA strand along' immediately after an amino acid is joined, what is the direct functional result?",
-            options: [
-                "The mRNA will reverse its path back into the nucleus",
-                "The next tRNA will be unable to fall into place, halting elongation of the polypeptide",
-                "The DNA template will immediately begin a new round of transcription",
-                "Multiple identical amino acids will be added simultaneously from the same tRNA"
-            ],
-            correct: 1
-        },
-        {
-            question: "Considering the pathway from gene to protein, where does the critical translation from 'nucleic acid sequence' to 'amino acid sequence' mechanistically occur?",
-            options: [
-                "When transcription factors initially bind to the DNA helix",
-                "As the mRNA transcript passes through the nuclear pore complex",
-                "When the tRNA anticodon matches the mRNA codon at the active ribosome",
-                "When RNA polymerase unwinds the DNA double helix"
-            ],
-            correct: 2
-        },
-        {
-            question: "A specific cellular toxin permanently seals the nuclear pores. Which stage of gene expression is directly isolated and prevented from occurring as a result?",
-            options: [
-                "Transcription",
-                "Unwinding of DNA",
-                "Binding of transcription factors",
-           
+            <div class="question-card" data-qindex="3">
+                <div class="question-text">3. A sequence of three bases on an mRNA molecule is referred to as a(n):</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="Triplet" required> Triplet</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="Anticodon"> Anticodon</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="Codon" data-correct="true"> Codon</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="Polypeptide"> Polypeptide</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="4">
+                <div class="question-text">4. Where is an anticodon located?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="On the DNA template strand" required> On the DNA template strand</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="On the mRNA molecule"> On the mRNA molecule</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="On the ribosome"> On the ribosome</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="On the tRNA molecule" data-correct="true"> On the tRNA molecule</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="5">
+                <div class="question-text">5. How many possible base code combinations exist in the genetic code?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="20" required> 20</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="64" data-correct="true"> 64</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="16"> 16</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="4"> 4</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="6">
+                <div class="question-text">6. What is the biological significance of having 64 possible code combinations for only 20 amino acids?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="It allows multiple amino acids to be coded by a single codon" required> It allows multiple amino acids to be coded by a single codon</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="It creates redundancy, meaning more than one codon can code for a particular amino acid" data-correct="true"> It creates redundancy, meaning more than one codon can code for a particular amino acid</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="It ensures that transcription factors bind securely to DNA"> It ensures that transcription factors bind securely to DNA</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="It prevents the removal of methionine from the polypeptide chain"> It prevents the removal of methionine from the polypeptide chain</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="7">
+                <div class="question-text">7. Which amino acid does the initiation codon AUG code for?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="Serine" required> Serine</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="Glycine"> Glycine</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="Methionine" data-correct="true"> Methionine</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="Tryptophan"> Tryptophan</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="8">
+                <div class="question-text">8. What happens when the protein-synthesizing machinery encounters a stop codon?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="A special 'stop' amino acid is added to the chain" required> A special 'stop' amino acid is added to the chain</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="Translation ends and the chain is terminated" data-correct="true"> Translation ends and the chain is terminated</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="The ribosome reverses its direction on the mRNA"> The ribosome reverses its direction on the mRNA</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="RNA polymerase detaches from the DNA"> RNA polymerase detaches from the DNA</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="9">
+                <div class="question-text">9. How many codons act as 'stop' signals rather than coding for an amino acid?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="One" required> One</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="Two"> Two</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="Three" data-correct="true"> Three</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="Four"> Four</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="10">
+                <div class="question-text">10. What molecule acts as the bridge between the information stored in DNA and the formation of a protein?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="DNA polymerase" required> DNA polymerase</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="Ribose nucleic acid (RNA)" data-correct="true"> Ribose nucleic acid (RNA)</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="Transcription factors"> Transcription factors</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="The polypeptide chain"> The polypeptide chain</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="11">
+                <div class="question-text">11. The process of transcription begins when:</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q11" value="mRNA binds to the ribosome" required> mRNA binds to the ribosome</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q11" value="A section of DNA unwinds after transcription factors bind" data-correct="true"> A section of DNA unwinds after transcription factors bind</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q11" value="tRNA brings an amino acid to the cytoplasm"> tRNA brings an amino acid to the cytoplasm</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q11" value="The ribosome nudges the mRNA strand along"> The ribosome nudges the mRNA strand along</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="12">
+                <div class="question-text">12. During transcription, what acts as the template for the synthesized mRNA?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q12" value="Both strands of the DNA molecule" required> Both strands of the DNA molecule</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q12" value="One strand of the DNA molecule" data-correct="true"> One strand of the DNA molecule</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q12" value="The RNA polymerase enzyme"> The RNA polymerase enzyme</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q12" value="The assembled ribosomes"> The assembled ribosomes</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="13">
+                <div class="question-text">13. Which enzyme catalyzes the synthesis of mRNA during transcription?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q13" value="DNA polymerase" required> DNA polymerase</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q13" value="RNA polymerase" data-correct="true"> RNA polymerase</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q13" value="Ribosomal RNA"> Ribosomal RNA</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q13" value="Helicase"> Helicase</label></li>
+                </ul>
+            </div>
+
+            <div class="question-card" data-qindex="14">
+                <div class="question-text">14. After mRNA is synthesized, how does it reach the cytoplasm?</div>
+                <ul class="options-list">
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q14" value="It diffuses directly through the solid nuclear membrane" required> It diffuses directly through the solid nuclear membrane</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q14" value="It is transported by tRNA molecules"> It is transported by tRNA molecules</label></li>
+                    <li class="option-item"><label class="option-label"><input type="radio" name="q14" value="It moves through the n
